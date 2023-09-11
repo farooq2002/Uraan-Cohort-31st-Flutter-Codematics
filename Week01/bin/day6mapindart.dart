@@ -26,7 +26,7 @@ void main() {
   // containes
   var isX = Students.containsKey('Zakarya');
   print(isX);
-  //updating a key in a object
+  //updating a value in a object by key
   Students.update('Ihsan', (value) => 'Azan');
   print(Students);
 }
