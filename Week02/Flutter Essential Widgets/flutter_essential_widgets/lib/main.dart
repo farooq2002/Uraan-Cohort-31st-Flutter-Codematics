@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_essential_widgets/screens/alignmentfractional.dart';
 import 'package:flutter_essential_widgets/screens/alignwidget.dart';
 import 'package:flutter_essential_widgets/screens/container_widget.dart';
+import 'package:flutter_essential_widgets/screens/directinality.dart';
+import 'package:flutter_essential_widgets/screens/homescreen.dart';
 import 'package:flutter_essential_widgets/screens/listview.dart';
 import 'package:flutter_essential_widgets/screens/listviewbuilder.dart';
 import 'package:flutter_essential_widgets/screens/padding_widget.dart';
@@ -21,10 +23,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Essentials widgets',
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+            foregroundColor: Colors.white,
+            centerTitle: true,
+            color: Colors.deepPurple),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const AlignFractionalOffset(),
+      home: const HomeScreen(),
     );
   }
 }

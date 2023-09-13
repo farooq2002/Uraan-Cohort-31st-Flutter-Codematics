@@ -62,40 +62,45 @@ class _ListViewScreenState extends State<ListViewScreen> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: ListView(
+      body: ListWheelScrollView(
+          offAxisFraction: .05, //for rotation of the lisview
+          magnification: 1.1, //for foucsing the current item
+          diameterRatio: 3, //distance between items
+          useMagnifier: true, //for focus true
+          itemExtent: 80, //height of the items
           children: list1.map((item) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-          child: Material(
-            elevation: 6,
-            child: ListTile(
-              tileColor: Colors.grey,
-              subtitle: const Text(
-                "Available",
-                style: TextStyle(color: Colors.white),
-              ),
-              trailing: InkWell(
-                onTap: () {
-                  deleteitem();
-                },
-                child: const Icon(
-                  Icons.delete,
-                  color: Colors.white,
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+              child: Material(
+                elevation: 6,
+                child: ListTile(
+                  tileColor: Colors.grey,
+                  subtitle: const Text(
+                    "Available",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  trailing: InkWell(
+                    onTap: () {
+                      deleteitem();
+                    },
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    ),
+                  ),
+                  leading: CircleAvatar(
+                    child: Text(
+                      list1.length.toString(),
+                    ),
+                  ),
+                  title: Text(
+                    item,
+                    style: const TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
-              leading: CircleAvatar(
-                child: Text(
-                  list1.length.toString(),
-                ),
-              ),
-              title: Text(
-                item,
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        );
-      }).toList()),
+            );
+          }).toList()),
     );
   }
 }
