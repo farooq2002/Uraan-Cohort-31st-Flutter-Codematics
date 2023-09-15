@@ -4,8 +4,8 @@ import 'package:sqflite_practice/models/model_student.dart';
 
 const String databaseName = "student_db";
 const String studentTable = "student_table";
-const String columnId = "column_id";
-const String columnName = "column_name";
+const String column_id = "id";
+const String columnName = "name";
 
 class StudentDatabase {
   // Static variable to hold the reference to the SQLite database.
@@ -41,21 +41,15 @@ class StudentDatabase {
       // Open the database, specifying the schema to create the student table.
       Database database = await openDatabase(
         path,
-        version: 2,
+        version: 1,
         onCreate: (Database db, int version) {
           // Create the student table with columns: column_id (integer, primary key)
           // and column_name (text).
           db.execute('''
-            CREATE TABLE $studentTable (
-      $columnId INTEGER PRIMARY KEY,
-      $columnName TEXT NOT NULL
-    )
+          CREATE TABLE $studentTable(
+          $column_id INTEGER PRIMARY KEY,
+          $columnName TEXT NOT NULL)
         ''');
-        },
-        onUpgrade: (Database db, int oldVersion, int newVersion) {
-          if (oldVersion < 2) {
-            // Perform your schema migration here if needed
-          }
         },
       );
       return database;
@@ -83,7 +77,7 @@ class StudentDatabase {
     try {
       Database db = await this.database;
       var result = await db.update(studentTable, modelStudent.toMap(),
-          where: "$columnId=?", whereArgs: [columnId]);
+          where: "$column_id=?", whereArgs: [modelStudent.id]);
       return true;
     } catch (e) {
       print("Student updated database error : ${e.toString()}");
@@ -96,7 +90,7 @@ class StudentDatabase {
     try {
       Database db = await this.database;
       var result =
-          await db.delete(studentTable, where: "$columnId=?", whereArgs: [id]);
+          await db.delete(studentTable, where: "$column_id=?", whereArgs: [id]);
       return true;
     } catch (e) {
       print("Student deleted database error : ${e.toString()}");
@@ -122,7 +116,7 @@ class StudentDatabase {
     try {
       Database db = await this.database;
       List<Map<String, dynamic>> result =
-          await db.query(studentTable, orderBy: "$columnId DESC");
+          await db.query(studentTable, orderBy: "$column_id DESC");
       if (result.isNotEmpty) {
         for (int i = 0; i < result.length; i++) {
           ModelStudent modelStudent = ModelStudent.fromMap(result[i]);

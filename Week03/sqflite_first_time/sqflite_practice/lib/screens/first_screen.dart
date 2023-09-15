@@ -19,6 +19,7 @@ class _FirstScreenState extends State<FirstScreen> {
     super.initState();
 
     ModelStudent ss = ModelStudent(id: 1, name: 'Farooq ahmad');
+
     ModelStudent object = ModelStudent.fromMap(ss.toMap());
 
     setState(() {
@@ -126,36 +127,36 @@ class _FirstScreenState extends State<FirstScreen> {
                 ],
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       ElevatedButton(
-            //           onPressed: () {}, child: const Text("Add Student")),
-            //       const SizedBox(
-            //         width: 10,
-            //       ),
-            //       ElevatedButton(
-            //           onPressed: () {}, child: const Text("Add Student"))
-            //     ],
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       ElevatedButton(
-            //           onPressed: () {}, child: const Text("Add Student")),
-            //       const SizedBox(
-            //         width: 10,
-            //       ),
-            //       ElevatedButton(
-            //           onPressed: () {}, child: const Text("Add Student"))
-            //     ],
-            //   ),
-            // )
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {}, child: const Text("Delete Student")),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {}, child: const Text("Add Student"))
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {}, child: const Text("Add Student")),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {}, child: const Text("Add Student"))
+                ],
+              ),
+            )
           ],
         ),
       ),
