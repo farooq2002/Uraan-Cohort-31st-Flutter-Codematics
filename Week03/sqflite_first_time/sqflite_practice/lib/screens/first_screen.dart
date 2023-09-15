@@ -13,6 +13,7 @@ class _FirstScreenState extends State<FirstScreen> {
   String id = "";
   String name = "";
   StudentDatabase databaseStudent = StudentDatabase();
+  List<ModelStudent> students = [];
 
   @override
   void initState() {
@@ -24,6 +25,11 @@ class _FirstScreenState extends State<FirstScreen> {
 
     setState(() {
       databaseStudent.initializedDatabase();
+      databaseStudent.getAllStudent().then((studentlList) {
+        setState(() {
+          students = studentlList;
+        });
+      });
     });
   }
 
@@ -52,10 +58,12 @@ class _FirstScreenState extends State<FirstScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
                 child: TextField(
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.phone_android),
-                      hintText: "Type Id here",
-                      border: InputBorder.none),
+                    prefixIcon: Icon(Icons.phone_android),
+                    hintText: "Type Id here",
+                    border: InputBorder.none,
+                  ),
                   onChanged: (value) {
                     setState(() {
                       id = value;
@@ -93,18 +101,30 @@ class _FirstScreenState extends State<FirstScreen> {
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        ModelStudent modelStudent =
-                            ModelStudent(id: int.parse(id), name: name);
+                        if (id.isNotEmpty) {
+                          ModelStudent modelStudent =
+                              ModelStudent(id: int.parse(id), name: name);
 
-                        databaseStudent
-                            .updateStudent(modelStudent)
-                            .then((value) {
-                          if (value) {
-                            print("Record updated Successfully!");
-                          } else {
-                            print("Record updated failed!");
-                          }
-                        });
+                          databaseStudent
+                              .updateStudent(modelStudent)
+                              .then((value) {
+                            if (value) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Record updated Successfully!"),
+                                ),
+                              );
+                            } else {
+                              print("Record updated failed!");
+                            }
+                          });
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Please provide a Integer value"),
+                            ),
+                          );
+                        }
                       },
                       child: const Text("Update Student")),
                   const SizedBox(
@@ -117,9 +137,17 @@ class _FirstScreenState extends State<FirstScreen> {
 
                         databaseStudent.addStudent(modelStudent).then((value) {
                           if (value) {
-                            print("Student added sucessfully!");
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Student added sucessfully!"),
+                              ),
+                            );
                           } else {
-                            print("Student data failed!");
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Student data failed!"),
+                              ),
+                            );
                           }
                         });
                       },
@@ -133,12 +161,31 @@ class _FirstScreenState extends State<FirstScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                      onPressed: () {}, child: const Text("Delete Student")),
+                      onPressed: () {
+                        ModelStudent modelStudent =
+                            ModelStudent(id: int.parse(id), name: name);
+
+                        databaseStudent.deleteStudent(id).then((value) {
+                          if (value) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                    Text("Deleted single student from last"),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Single entry deletion failed!"),
+                              ),
+                            );
+                          }
+                        });
+                      },
+                      child: const Text("Delete Student")),
                   const SizedBox(
                     width: 10,
                   ),
-                  ElevatedButton(
-                      onPressed: () {}, child: const Text("Add Student"))
                 ],
               ),
             ),
@@ -148,14 +195,47 @@ class _FirstScreenState extends State<FirstScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                      onPressed: () {}, child: const Text("Add Student")),
+                      onPressed: () async {
+                        ModelStudent modelStudent =
+                            ModelStudent(id: int.parse(id), name: name);
+
+                        databaseStudent.deleteAllStudent().then((value) {
+                          if (value) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    "Deleted All Students data successfully!"),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Deletion Failed!"),
+                              ),
+                            );
+                          }
+                        });
+                      },
+                      child: const Text("Delete All Student")),
                   const SizedBox(
                     width: 10,
                   ),
-                  ElevatedButton(
-                      onPressed: () {}, child: const Text("Add Student"))
                 ],
               ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: students.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        leading: CircleAvatar(
+                            child: Text(students[index].id.toString())),
+                        title: Text(students[index].name),
+                        subtitle: const Text("Urran Intern"),
+                      ),
+                    );
+                  }),
             )
           ],
         ),

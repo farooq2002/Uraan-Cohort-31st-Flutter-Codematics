@@ -99,7 +99,7 @@ class StudentDatabase {
   }
 
   // Delete all students from database
-  Future<bool> deleteAllStudent(String id) async {
+  Future<bool> deleteAllStudent() async {
     try {
       Database db = await this.database;
       var result = await db.delete(studentTable);
@@ -111,7 +111,7 @@ class StudentDatabase {
   }
 
   //=========== Get all students data =========================================
-  Future<List<ModelStudent>> getAllStudent(ModelStudent modelStudent) async {
+  Future<List<ModelStudent>> getAllStudent() async {
     List<ModelStudent> list_student = [];
     try {
       Database db = await this.database;
