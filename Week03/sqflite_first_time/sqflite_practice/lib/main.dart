@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'SQFLITE PRACTICE',
+      title: 'Note App',
       home: FirstScreen(),
     );
   }

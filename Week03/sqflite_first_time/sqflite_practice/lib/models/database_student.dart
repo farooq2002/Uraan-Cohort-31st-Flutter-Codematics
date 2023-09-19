@@ -8,30 +8,26 @@ const String column_id = "id";
 const String columnName = "name";
 
 class StudentDatabase {
-  // Static variable to hold the reference to the SQLite database.
-  static Database? _database;
-
-  Future<Database> get database async {
-    if (_database == null) {
-      _database = await initializedDatabase();
-    }
-
-    return _database!;
-  }
-
   // Static variable to hold a single instance of the StudentDatabase class.
   static StudentDatabase? _studentDatabase;
   // Private constructor to ensure that instances are only created within the class.
   StudentDatabase._onCreateInstance();
 // Factory constructor for creating instances of the StudentDatabase class.
   factory StudentDatabase() {
-    if (_studentDatabase == null) {
-      _studentDatabase = StudentDatabase._onCreateInstance();
-    }
+    _studentDatabase ??= StudentDatabase._onCreateInstance();
     return _studentDatabase!;
   }
 
-  Future<Database?> initializedDatabase() async {
+  // Static variable to hold the reference to the SQLite database.
+  static Database? _database;
+
+  Future<Database> get database async {
+    _database ??= await initializedDatabase();
+
+    return _database!;
+  }
+
+  Future<Database> initializedDatabase() async {
     try {
       // Get the path to the directory where databases are stored.
       var databasPath = await getDatabasesPath();
@@ -47,15 +43,16 @@ class StudentDatabase {
           // and column_name (text).
           db.execute('''
           CREATE TABLE $studentTable(
-          $column_id INTEGER PRIMARY KEY,
+          $column_id INTEGER PRIMARY KEY AUTOINCREMENT,
           $columnName TEXT NOT NULL)
         ''');
         },
       );
+
       return database;
     } catch (e) {
       print("Database error : ${e.toString()}");
-      return null;
+      return null!;
     }
   }
 

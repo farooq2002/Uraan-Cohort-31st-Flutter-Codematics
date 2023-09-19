@@ -1,8 +1,8 @@
 class ModelStudent {
-  int id;
+  int? id;
   String name;
 
-  ModelStudent({required this.id, required this.name});
+  ModelStudent({this.id, required this.name});
 
   /* 
   toMap() It converts a ModelStudent object into a 
