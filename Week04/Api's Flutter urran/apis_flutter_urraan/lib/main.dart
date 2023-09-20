@@ -1,25 +1,28 @@
 import 'package:apis_flutter_urraan/models/product_model.dart';
+import 'package:apis_flutter_urraan/task.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-void main() {
-  runApp(const MyApp());
-}
+import 'package:http/http.dart';
+
+void main() => runApp(
+  DevicePreview(
+    enabled: true,
+    builder: (context) => MyApp(), // Wrap your app
+  ),
+);
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 83, 1, 224)),
-        useMaterial3: true,
-      ),
-      home: const HomeScreen(),
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      home: const TaskTextWidget(),
     );
   }
 }
@@ -76,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     CircularProgressIndicator(),
                     Text(
                       "Wait",
-                      style: TextStyle(color: Colors.black, fontSize: 30),
+                      style: TextStyle(color: Colors.black, fontSize: 30,),
                     ),
                   ],
                 ),
