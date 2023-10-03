@@ -41,9 +41,9 @@ class _CountryScreenState extends State<CountryScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      Container(
-                        height: 100,
-                        width: 100,
+                      SizedBox(
+                        height: 300,
+                        width: 300,
                         child: Image.network(
                           snap!.flags!.png.toString(),
                           fit: BoxFit.fill,

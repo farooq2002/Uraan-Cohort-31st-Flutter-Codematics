@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:api_jsonplaceholder/models/photos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
